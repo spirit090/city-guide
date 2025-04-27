@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ballari City Guide</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #f43f5e;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --accent: #6366f1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      color: var(--dark);
+      background-color: #f1f5f9;
+      line-height: 1.6;
+    }
+
+
+    .container {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: white;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      font-size: 1.75rem;
+      margin-right: 0.25rem;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    nav.desktop-nav {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    nav button {
+      background: transparent;
+      color: white;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 1rem;
+    }
+
+    nav button:hover, nav button.active {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Mobile navigation */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--primary);
+      z-index: 200;
+      flex-direction: column;
+      padding: 5rem 2rem;
+    }
+
+    .mobile-nav button {
+      background: transparent;
+      color: white;
+      border: none;
+      padding: 1rem;
+      text-align: left;
+      font-size: 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
+
+    .mobile-nav button:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-nav .close-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Hero section */
+    .hero {
+      position: relative;
+      height: 500px;
+      background-image: url('/api/placeholder/1400/500');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.3));
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+
+    .btn-outline:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Main content */
+    .main-content {
+      margin: 3rem 0;
+    }
+
+    .section {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s, transform 0.5s;
+    }
+
+    .section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      color: var(--dark);
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+
+    .section-header p {
+      color: var(--gray);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-img {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .card:hover .card-img img {
+      transform: scale(1.05);
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--dark);
+    }
+
+    .card-text {
+      color: var(--gray);
+      margin-bottom: 1rem;
+    }
+
+    .card-meta {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .meta-icon {
+      color: var(--primary);
+    }
+
+    /* Founder section */
+    .founder-card {
+      background-color: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 2rem;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .founder-avatar {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      border: 5px solid var(--primary);
+    }
+
+    .founder-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .founder-info h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+
+    .founder-role {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .founder-bio {
+      color: var(--gray);
+      max-width: 500px;
+      margin: 0 auto 2rem auto;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--primary);
+      color: white;
+      border-radius: 50%;
+      transition: all 0.3s;
+      font-size: 1.2rem;
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px);
+      background-color: var(--primary-dark);
+    }
+
+    /* Home section */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .feature-card {
+      background-color: white;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .feature-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem auto;
+      color: white;
+      font-size: 1.75rem;
+    }
+
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+
+    .feature-text {
+      color: var(--gray);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 20px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .footer-col h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.75rem;
+      text-align: center;
+    }
+
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 45%;
+      justify-content: center;
+      width: 150px;
+      height: 3px;
+      background: var(--primary);
+    }
+
+    .footer-nav {
+      list-style: none;
+    }
+
+    .footer-nav li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-nav a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .footer-nav a:hover {
+      color: white;
+      padding-left: 5px;
+    }
+
+    .footer-contact p {
+
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .footer-contact a
+    {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .footer-contact i {
+      color: var(--primary);
+    }
+
+    .slogan {
+      text-align: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+
+    .slogan a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 992px) {
+      .hero h1 {
+        font-size: 2.75rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .desktop-nav {
+        display: none !important;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .hero {
+        height: 400px;
+      }
+
+      .hero h1 {
+        font-size: 2.25rem;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+      }
+
+      .section-header h2 {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero {
+        height: 350px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header & Navigation -->
+  <header>
+    <div class="container header-container">
+      <a href="#" class="logo">
+        <i class="fas fa-city logo-icon"></i>
+        Ballari Guide
+      </a>
+      <button class="mobile-menu-btn" id="menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav class="desktop-nav">
+        <button onclick="showSection('home')" class="active">Home</button>
+        <button onclick="showSection('food')">Food</button>
+        <button onclick="showSection('doctors')">Doctors</button>
+        <button onclick="showSection('travel')">Travel</button>
+        <button onclick="showSection('rental')">Rentals</button>
+        <button onclick="showSection('temples')">Temples</button>
+        <button onclick="showSection('education')">Education</button>
+        <button onclick="showSection('founder')">Founder</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation -->
+  <div class="mobile-nav" id="mobile-nav">
+    <button class="close-btn" id="close-btn">
+      <i class="fas fa-times"></i>
+    </button>
+    <button onclick="showSection('home'); closeMobileMenu();">Home</button>
+    <button onclick="showSection('food'); closeMobileMenu();">Food</button>
+    <button onclick="showSection('doctors'); closeMobileMenu();">Doctors</button>
+    <button onclick="showSection('travel'); closeMobileMenu();">Travel</button>
+    <button onclick="showSection('rental'); closeMobileMenu();">Rentals</button>
+    <button onclick="showSection('temples'); closeMobileMenu();">Temples</button>
+    <button onclick="showSection('education'); closeMobileMenu();">Education</button>
+    <button onclick="showSection('founder'); closeMobileMenu();">Founder</button>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Discover the Best of Ballari</h1>
+      <p>Your comprehensive guide to food, healthcare, travel, education, and more in the heart of Karnataka</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-primary" onclick="showSection('food')">Explore Now</a>
+        <a href="#" class="btn btn-outline" onclick="showSection('founder')">About Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="main-content container">
+    
+    <!-- Home Section -->
+    <section id="home" class="section active">
+      <div class="section-header">
+        <h2>Welcome to Ballari City Guide</h2>
+        <p>Discover everything you need to know about Ballari - from the best local food to healthcare, education, and more.</p>
+      </div>
+
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-utensils"></i>
+          </div>
+          <h3 class="feature-title">Local Cuisine</h3>
+          <p class="feature-text">Discover the best restaurants and food spots Ballari has to offer for authentic local flavors.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-user-md"></i>
+          </div>
+          <h3 class="feature-title">Healthcare</h3>
+          <p class="feature-text">Find the most trusted healthcare professionals and facilities in Ballari.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3 class="feature-title">Education</h3>
+          <p class="feature-text">Explore top educational institutions and learning centers in the city.</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Food Section -->
+    <section id="food" class="section">
+      <div class="section-header">
+        <h2>Best Food Places in Ballari</h2>
+        <p>Satisfy your cravings at these exceptional restaurants and eateries throughout the city.</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Naivedyam Restaurant">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Akhilesh Restaurant</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt meta-icon"></i>
+                <span>Gandhinagar, Ballari</span>
+              </div>
+              <div class="meta-item">
+                <i class="far fa-clock meta-icon"></i>
+                <span>8 AM – 10 PM</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 98456 12345</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Spice Garden">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Spice Garden</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt meta-icon"></i>
+                <span>Royal Circle, Ballari</span>
+              </div>
+              <div class="meta-item">
+                <i class="far fa-clock meta-icon"></i>
+                <span>10 AM – 11 PM</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 94823 67890</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Spice Garden">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Spice Garden</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt meta-icon"></i>
+                <span>Royal Circle, Ballari</span>
+              </div>
+              <div class="meta-item">
+                <i class="far fa-clock meta-icon"></i>
+                <span>10 AM – 11 PM</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 94823 67890</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Spice Garden">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Spice Garden</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt meta-icon"></i>
+                <span>Royal Circle, Ballari</span>
+              </div>
+              <div class="meta-item">
+                <i class="far fa-clock meta-icon"></i>
+                <span>10 AM – 11 PM</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 94823 67890</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Udupi Palace">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Udupi Palace</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt meta-icon"></i>
+                <span>SP Road, Ballari</span>
+              </div>
+              <div class="meta-item">
+                <i class="far fa-clock meta-icon"></i>
+                <span>7 AM – 10:30 PM</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 97654 32109</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Doctors Section -->
+    <section id="doctors" class="section">
+      <div class="section-header">
+        <h2>Top Healthcare Professionals</h2>
+        <p>Find the best doctors and specialists in Ballari for all your healthcare needs.</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Dr. Akhilesh">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Dr. Akhilesh</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-stethoscope meta-icon"></i>
+                <span>Cardiologist</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-hospital meta-icon"></i>
+                <span>Ballari Heart Center</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 81234 56789</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Dr. Kiran">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Dr. Shashi Kiran</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-stethoscope meta-icon"></i>
+                <span>Cardiologist</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-hospital meta-icon"></i>
+                <span>Ballari Heart Center</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 9999999</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Dr. siri">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Dr. Siri</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-stethoscope meta-icon"></i>
+                <span>Pediatrician</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-hospital meta-icon"></i>
+                <span>Children's Health Center</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 87654 32198</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Travel Section -->
+    <section id="travel" class="section">
+      <div class="section-header">
+        <h2>Travel Services in Ballari</h2>
+        <p>Reliable travel agencies and services to help you get around the city and beyond.</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Sai Travels">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Sai Travels</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt meta-icon"></i>
+                <span>Bus Stand Road, Ballari</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 99887 66554</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-bus meta-icon"></i>
+                <span>Intercity bus services</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Pawan Travels">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Pawan travels</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt meta-icon"></i>
+                <span>Railway Station Area, Ballari</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 98765 43210</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-taxi meta-icon"></i>
+                <span>Bus Services</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="VRL">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">VRL</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt meta-icon"></i>
+                <span>Market Road, Ballari</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 94321 56789</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-route meta-icon"></i>
+                <span>Bus services</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Rental Section -->
+    <section id="rental" class="section">
+      <div class="section-header">
+        <h2>House Rentals in Ballari</h2>
+        <p>Find your perfect home with these rental properties available across the city.</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="2BHK Apartment">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">2BHK for Rent - Kappagal Road</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-home meta-icon"></i>
+                <span>2 Bedroom Apartment</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-rupee-sign meta-icon"></i>
+                <span>₹8,000/month</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 90909 09090</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="3BHK House">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">3BHK Independent House - Gandhi Nagar</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-home meta-icon"></i>
+                <span>3 Bedroom Independent House</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-rupee-sign meta-icon"></i>
+                <span>₹12,000/month</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 98765 43210</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="1BHK Apartment">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">1BHK Furnished - Near Bus Stand</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-home meta-icon"></i>
+                <span>1 Bedroom Furnished Apartment</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-rupee-sign meta-icon"></i>
+                <span>₹6,500/month</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 87654 32109</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Temples Section -->
+    <section id="temples" class="section">
+      <div class="section-header">
+        <h2>Sacred Temples in Ballari</h2>
+        <p>Discover spirituality and heritage at these beautiful temples around the city.</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Amrutheshwara Temple">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Amrutheshwara Temple</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt meta-icon"></i>
+                <span>Talur Road, Ballari</span>
+              </div>
+              <div class="meta-item">
+                <i class="far fa-clock meta-icon"></i>
+                <span>6 AM – 8 PM</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-info-circle meta-icon"></i>
+                <span>Famous for its architecture</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Durgamma Temple">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Durgamma Temple</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt meta-icon"></i>
+                <span>SP Office, Ballari</span>
+              </div>
+              <div class="meta-item">
+                <i class="far fa-clock meta-icon"></i>
+                <span>5:30 AM – 9 PM</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-info-circle meta-icon"></i>
+                <span>Ancient temple with historical significance</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Kumaraswamy Temple">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Kumaraswamy Temple</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt meta-icon"></i>
+                <span>Devi Nagar, Near Fire-station</span>
+              </div>
+              <div class="meta-item">
+                <i class="far fa-clock meta-icon"></i>
+                <span>6 AM – 7 PM</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-info-circle meta-icon"></i>
+                <span>Beautiful hilltop location</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Education Section -->
+    <section id="education" class="section">
+      <div class="section-header">
+        <h2>Educational Institutions</h2>
+        <p>Top-quality education centers and institutions in and around Ballari.</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="VIMS Medical College">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">VIMS Medical College</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt meta-icon"></i>
+                <span>Cantonment, Ballari</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 83623 45678</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-graduation-cap meta-icon"></i>
+                <span>Medical Courses</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Veersashaiva College">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Veersashaiva College</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt meta-icon"></i>
+                <span>Cantonment Area, Ballari</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 94835 11223</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-school meta-icon"></i>
+                <span>Degree Courses</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img">
+            <img src="/api/placeholder/400/300" alt="Rymec Engineering College">
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Rymec Engineering College</h3>
+            <div class="card-meta">
+              <div class="meta-item">
+                <i class="fas fa-map-marker-alt meta-icon"></i>
+                <span>Contonment, Ballari</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-phone meta-icon"></i>
+                <span>+91 92345 67890</span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-graduation-cap meta-icon"></i>
+                <span>Engineering & Technical Education</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Founder Section -->
+    <section id="founder" class="section">
+      <div class="section-header">
+        <h2>Our Founders</h2>
+        <p>Meet the visionaries behind the Ballari City Guide</p>
+      </div>
+
+      <div class="founder-card">
+        <div class="founder-avatar">
+          <img src="/api/placeholder/300/300" alt="Shashi and Siri">
+        </div>
+        <div class="founder-info">
+          <h3>Shashi & Siri</h3>
+          <div class="founder-role">Founders & Developers</div>
+          <p class="founder-bio">
+            Shashi and Siri are the visionaries behind Ballari City Guide. With their deep love for the city and commitment to serving the community, they built this comprehensive platform to connect people to the heart of Ballari and make local information accessible to everyone.
+          </p>
+          </div>
+          
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        
+        <div class="footer-col">
+          <h3>Contact Us</h3>
+          <div class="footer-contact">
+            <p><i class="fas fa-envelope"></i><a href="mailto:shashinihas99@gmail.com">shashinihas99@gmail.com</a></p>
+<p><i class="fas fa-phone"></i> <a href="tel:+918296600632">+91 8296600632</a></p>
+
+            <p><i class="fas fa-map-marker-alt"></i> Ballari, Karnataka, India</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="slogan">
+        <p>Designed with ❤️ by Shashi & Siri</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      
+
+      document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`button[onclick="showSection('${id}')"]`).classList.add('active');
+      
+
+      window.scrollTo({
+        top: document.querySelector('main').offsetTop - 70,
+        behavior: 'smooth'
+      });
+    }
+    
+
+    const menuBtn = document.getElementById('menu-btn');
+    const closeBtn = document.getElementById('close-btn');
+    const mobileNav = document.getElementById('mobile-nav');
+    
+    menuBtn.addEventListener('click', () => {
+      mobileNav.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+    
+    closeBtn.addEventListener('click', () => {
+      closeMobileMenu();
+    });
+    
+    function closeMobileMenu() {
+      mobileNav.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+    
+
+    document.addEventListener('click', (e) => {
+      if (e.target === mobileNav) {
+        closeMobileMenu();
+      }
+    });
+    
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        closeMobileMenu();
+      }
+    });
+  </script>
+</body>
+</html>
